@@ -1,7 +1,7 @@
 require 'thor'
 require 'date'
 
-module Avc
+module Cavc
   class CLI < Thor
     desc 'create', 'create contest'
     def create

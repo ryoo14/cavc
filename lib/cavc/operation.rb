@@ -1,6 +1,6 @@
 require 'net/https'
 
-module Avc
+module Cavc
   module Operation
     def self.input_contest_info
       # input info

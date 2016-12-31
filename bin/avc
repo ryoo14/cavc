@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 
-require 'avc'
+require 'cavc'
 
-Avc::CLI.start
+Cavc::CLI.start

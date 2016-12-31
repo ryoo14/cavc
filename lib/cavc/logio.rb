@@ -1,17 +1,17 @@
 require 'net/https'
 require 'yaml'
 
-module Avc
+module Cavc
   module Logio 
     def self.login
 
       home = ENV['HOME']
-      unless File.exists?("#{home}/.avconfig")
-        puts "Error: please create #{home}/.avconfig file at yaml"
+      unless File.exists?("#{home}/.cavconfig")
+        puts "Error: please create #{home}/.cavconfig file at yaml"
         exit 1
       end
 
-      conf = YAML.load_file("#{home}/.avconfig")
+      conf = YAML.load_file("#{home}/.cavconfig")
 
       uri = URI::parse('https://not-522.appspot.com/login')
 

@@ -1,10 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'avc/version'
+require 'cavc/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "avc"
+  spec.name          = "cavc"
   spec.version       = Avc::VERSION
   spec.authors       = ["ryoana14"]
   spec.email         = ["anana12185@gmail.com"]

@@ -1,6 +1,6 @@
 require 'date'
 
-module Avc
+module Cavc
   module Operation
     module Input
       def self.input_info
