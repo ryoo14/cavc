@@ -5,7 +5,7 @@ require 'cavc/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "cavc"
-  spec.version       = Avc::VERSION
+  spec.version       = Cavc::VERSION
   spec.authors       = ["ryoana14"]
   spec.email         = ["anana12185@gmail.com"]
 
