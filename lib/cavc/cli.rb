@@ -7,20 +7,21 @@ module Cavc
     def create
       # input info
       opt = Operation.input_contest_info
-
-      p opt
       
       # get token
-      #cookie = Logio.login
+       cookie = Logio.login
 
       # create contest
-      #Operation.create(opt, cookie)
+      contest_page = Operation.create_contest(opt, cookie)
+
+      # input info on probrem to add to contest
+      problems = Operation.input_problem_info
 
       # add contest
-      #Operation.add_contest
+      Operation.add_contest(contest_page, problems, cookie)
 
       # logout
-      #Logio.logout(cookie)
+      Logio.logout(cookie)
     end
   end
 end
