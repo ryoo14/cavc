@@ -134,19 +134,47 @@ module Cavc
 
         # abc
         abc.each do |x|
-          contest_number = [x[3..5]]
+          contest_number = x[3..5]
           contest_problems = x[6..-1]
           problems['abc'].store(contest_number, contest_problems)
         end
 
         # arc
         arc.each do |x|
-          contest_number = [x[3..5]]
+          contest_number = x[3..5]
           contest_problems = x[6..-1]
           problems['arc'].store(contest_number, contest_problems)
         end
 
-        problems
+        prob_list = []
+        problems.each do |pk, pv|
+          if pk == "abc"
+            pv.each do |k, v|
+              if k.to_i > 19
+                v.split('').each do |pn|
+                  prob_list << "http://abc#{k}.contest.atcoder.jp/tasks/abc#{k}_#{pn}"
+                end
+              else
+                v.split('').each do |pn|
+                  prob_list << "http://abc#{k}.contest.atcoder.jp/tasks/abc#{k}_#{pn.ord-96}"
+                end
+              end
+            end
+          elsif pk == "arc"
+            pv.each do |k, v|
+              if k.to_i > 34
+                v.split('').each do |pn|
+                  prob_list << "http://arc#{k}.contest.atcoder.jp/tasks/abc#{k}_#{pn}"
+                end
+              else
+                v.split('').each do |pn|
+                  prob_list << "http://arc#{k}.contest.atcoder.jp/tasks/abc#{k}_#{pn.ord-96}"
+                end
+              end
+            end
+          end
+        end
+        prob_list
       end
     end
   end

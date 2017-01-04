@@ -43,10 +43,9 @@ module Cavc
       res['location']
     end
 
-    def self.add_contest(contest_page, problems, cookie)
+    def self.add_contest(contest_page, problem_list, cookie)
       # add contest
-#      uri = URI:parse("#{contest_page}/add_problem")
-      uri = URI.parse("https://not-522.appspot.com/setting/5708977300045824/add_problem")
+      uri = URI::parse("#{contest_page}/add_problem")
 
       https = Net::HTTP.new(uri.host, uri.port)
       https.use_ssl = true
@@ -56,9 +55,9 @@ module Cavc
       req['Cookie'] = cookie
       req["Upgrade-Insecure-Requests"] = "1"
 
-      2.times do |n|
+      problem_list.each do |n|
         req.set_form_data({
-          url: "http://abc02#{n+4}.contest.atcoder.jp/tasks/abc02#{n+4}_a"
+          url: n
         })
 
         https.request(req)
@@ -67,5 +66,3 @@ module Cavc
     end
   end
 end
-
-#/setting/4888638647173120/add_problem

@@ -9,16 +9,16 @@ module Cavc
       opt = Operation.input_contest_info
       
       # get token
-       cookie = Logio.login
+      cookie = Logio.login
 
       # create contest
       contest_page = Operation.create_contest(opt, cookie)
 
       # input info on probrem to add to contest
-      problems = Operation.input_problem_info
+      problem_list = Operation.input_problem_info
 
       # add contest
-      Operation.add_contest(contest_page, problems, cookie)
+      Operation.add_contest(contest_page, problem_list, cookie)
 
       # logout
       Logio.logout(cookie)
