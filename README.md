@@ -1,8 +1,8 @@
 # CAVC
 
-**※まだ未完成です。ロクに動きません。**
-
 [AtCoder Virtual Contest](https://not-522.appspot.com/)のコンテスト作成をコマンドでできるやつです。
+
+現状、ABCとARCのみ対応しています。その他のコンテストには対応していません。
 
 ## Installation
 
