@@ -6,9 +6,9 @@ module Cavc
       def self.input_contest
         opt = {}
 
-        puts "作成するコンテストの情報を入力してください。"
+        puts "作成するコンテストの情報を入力してください"
 
-        print "タイトル: "
+        print "タイトル []: "
         tmp = STDIN.gets.chomp
         if tmp.length == 0
           puts "空文字は許可されていません"
@@ -16,45 +16,50 @@ module Cavc
         end
         opt['title'] = tmp
         
-        print "開始日(yyyy/mm/dd) 空enterで今日日付: "
+        today = Date.today.strftime("%Y/%m/%d")
+
+        print "開始日(yyyy/mm/dd) [#{today}]: "
         tmp = STDIN.gets.chomp
         if tmp == ""
-          opt['start_day'] = Date.today.strftime("%Y/%m/%d")
+          opt['start_day'] = today
         else
           opt['start_day'] = tmp
         end
 
-        print "終了日(yyyy/mm/dd) 空enterで今日日付: "
+        print "終了日(yyyy/mm/dd) [#{today}]: "
         tmp = STDIN.gets.chomp
         if tmp == ""
-          opt['end_day'] = Date.today.strftime("%Y/%m/%d")
+          opt['end_day'] = today
         else
           opt['end_day'] = tmp
         end
 
         check_day(opt['start_day'], opt['end_day'])
 
-        print "開始時間(hh:mm): "
+        print "開始時間(hh:mm) []: "
         st = STDIN.gets.chomp
         # ガバガバすぎるしTimeとかでいい感じの探したほうがいい
-        if st == "" || st !~ /^[0-2]?[0-9]:[0-5]?[0-9]$/
+        if st == "" || st !~ /^([0-1][0-9]|[2][0-3]):[0-5]?[05]$/
           puts "入力値が不正です"
+          puts "分の入力は5の倍数のみ許可されます"
           exit 1
         end
 
-        print "終了時間(hh:mm): "
+        print "終了時間(hh:mm) []: "
         et = STDIN.gets.chomp
         # ガバガバすぎるしTimeとかでいい感じの探したほうがいい
-        if et == "" || et !~ /[0-2]?[0-9]:[0-5]?[0-9]/
+        if et == "" || et !~ /^([0-1][0-9]|[2][0-3]):[0-5]?[05]$/
           puts "入力値が不正です"
+          puts "分の入力は5の倍数のみ許可されます"
           exit 1
         end
 
         check_time(opt['start_day'], opt['end_day'], st, et)
 
-        opt['start_hour'], opt['start_minute'], opt['end_hour'], opt['end_minute'] = reshape_time(st, et)
+        opt['start_hour'], opt['start_minute'] = st.split(':').map(&:to_i)
+        opt['end_hour'], opt['end_minute'] = et.split(':').map(&:to_i)
 
-        print "ペナルティ(minute) 空enterで5分: "
+        print "ペナルティ(minute) [5]: "
         tmp = STDIN.gets.chomp
         if tmp == ""
           opt['penalty'] = "5"
@@ -62,7 +67,7 @@ module Cavc
           opt['penalty'] = tmp
         end
 
-        print "非公開設定([t|true] or [f|false]) 空enterでtrue: "
+        print "非公開設定([t|true] or [f|false]) [true]: "
         tmp = STDIN.gets.chomp
         if tmp == "" || tmp == "t" || tmp == "true"
           opt['private'] = "true"
@@ -79,7 +84,7 @@ module Cavc
       def self.input_problem
         puts "追加したい問題をスペース区切りで入力してください"
         puts "例えば、[ABC017のA-D問題]と[ARC010のA-B問題]を追加したい場合は[abc017abcd arc010ab]と入力します"
-        print "追加する問題: "
+        print "追加する問題 []: "
         input_problems = STDIN.gets.chomp.split
         reshape_prob(input_problems)
       end
@@ -88,7 +93,7 @@ module Cavc
 
       def self.check_day(sd, ed)
         if sd > ed
-          puts "終了日が開始日よりも前です。"
+          puts "終了日が開始日よりも前です"
           exit 1
         end
       end
@@ -96,31 +101,10 @@ module Cavc
       def self.check_time(sd, ed, st, et)
         if sd == ed
           if st >= et
-            puts "終了日時が開始日時よりも前か、同じです。"
+            puts "終了日時が開始日時よりも前か、同じです"
             exit 1
           end
         end
-      end
-      
-      def self.reshape_time(st, et)
-        # reshape parameter
-        # 日とか時間の繰り上がりを全く考慮に入れていなくてやばそう
-        start_hour, start_minute = st.split(':').map(&:to_i)
-        end_hour, end_minute = et.split(':').map(&:to_i)
-
-        if start_minute % 5 == 0
-          start_minute = start_minute
-        else
-          start_minute = start_minute + (5 - start_minute % 5)
-        end
-
-        if end_minute % 5 == 0
-          end_minute = end_minute
-        else
-          end_minute = end_minute + (5 - end_minute % 5)
-        end
-
-        [start_hour.to_s, start_minute.to_s, end_hour.to_s, end_minute]
       end
 
       def self.reshape_prob(probs)
@@ -174,6 +158,7 @@ module Cavc
             end
           end
         end
+
         prob_list
       end
     end
