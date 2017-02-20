@@ -23,11 +23,18 @@ avc create          # create contest
 avc help [COMMAND]  # Describe available commands or one specific command
 ```
 
+`$HOME/.cavconfig`を以下のように作ってください。
+
+```yaml
+id: ryoana
+password: hogehogefugafuga
+```
+
 `avc create`って叩けばあとはよしなに。
 
 ## Contributing
 
-ぜひお願いします。
+お願いします。
 
 ## License
 
