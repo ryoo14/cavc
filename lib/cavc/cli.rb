@@ -5,23 +5,30 @@ module Cavc
   class CLI < Thor
     desc 'create', 'create contest'
     def create
-      # input info
-      opt = Operation.input_contest_info
-      
-      # get token
-      cookie = Logio.login
+      # check to exist config file
+      if Cavc::Util.conf_exist?
+        # get token
+        logio = Logio.new
+        token = logio.login
+      else
+        puts "Error: Please create #{ENV['HOME']}/.cavconfig"
+        exit 1
+      end
+
+      # input contest info
+      basic_info = Contest::Input.basic_info
+      problem_info = Contest::Input.problem_info
+      contest = Contest.new(basic_info, problem_info)
+      sleep 3
 
       # create contest
-      contest_page = Operation.create_contest(opt, cookie)
+      contest_url = contest.create_contest(token)
 
-      # input info on probrem to add to contest
-      problem_list = Operation.input_problem_info
-
-      # add contest
-      Operation.add_contest(contest_page, problem_list, cookie)
+      # add problem to contest
+      contest.add_problem(contest_url, token)
 
       # logout
-      Logio.logout(cookie)
+      logio.logout(token)
     end
   end
 end

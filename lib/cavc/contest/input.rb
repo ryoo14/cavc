@@ -1,9 +1,9 @@
 require 'date'
 
 module Cavc
-  module Operation
+  class Contest
     module Input
-      def self.input_contest
+      def self.basic_info
         opt = {}
 
         puts "作成するコンテストの情報を入力してください"
@@ -81,7 +81,7 @@ module Cavc
         opt
       end
 
-      def self.input_problem
+      def self.problem_info
         puts "追加したい問題をスペース区切りで入力してください"
         puts "例えば、[ABC017のA-D問題]と[ARC010のA-B問題]を追加したい場合は[abc017abcd arc010ab]と入力します"
         print "追加する問題 []: "
